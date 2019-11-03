@@ -1,0 +1,39 @@
+﻿@*@model MyBooking.Models.UserModel
+    @{
+        ViewData["User"] = "My user";
+    }
+
+
+    <div class="page-header">
+        <h1>@ViewData["User"]</h1>
+    </div>
+
+    <div class="container">
+        @Model.FirstName
+        @Model.LastName
+
+    </div>*@
+
+
+@{
+    ViewData["Title"] = "CreateUser";
+}
+
+@model MyBooking.Models.UserModel
+
+<h2>CreateUser</h2>
+
+@*@{ UserModel newUserModel = new UserModel()
+    { FirstName = "Andrii", LastName = "Kovalenko", Email = "test@gmail.com", RoleId = 1, Password = "12456" };}*@
+
+@using (Html.BeginForm("Create","User", FormMethod.Post))
+{
+    @Html.EditorFor(model => model.FirstName);
+    @Html.EditorFor(model => model.LastName);
+    @Html.EditorFor(model => model.Email);
+    @Html.EditorFor(model => model.Password);
+    @Html.EditorFor(model => model.RoleId);
+
+    <input type="submit" value="Добавить"/>
+}
+
