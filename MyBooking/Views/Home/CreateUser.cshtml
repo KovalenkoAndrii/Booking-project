@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "CreateUser";
+}
+
+@model MyBooking.Models.UserModel
+
+<h2>CreateUser</h2>
+
+@using (Html.BeginForm("Show", "User"))
+{
+    Html.HiddenFor(model => model.FirstName);
+    Html.HiddenFor(model => model.LastName);
+    Html.HiddenFor(model => model.RoleId);
+    Html.HiddenFor(model => model.Email);
+    Html.HiddenFor(model => model.Password);
+
+    <input type="submit" value="+" />
+}
+
