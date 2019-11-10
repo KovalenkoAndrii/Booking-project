@@ -10,18 +10,19 @@ namespace MyBooking.Controllers
     [Route("Api/User")]
     public class UserController : ControllerBase
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserRepository userRepository;
+        private readonly ICredRepository credRepository;
 
         public UserController(IUserRepository userRepository)
         {
-            _userRepository = userRepository;
+            this.userRepository = userRepository;
         }
 
         /// GET Api/User
         [HttpGet]
         public ActionResult<IEnumerable<UserModel>> GetAll()
         {
-            List<User> users = _userRepository.GetAll();
+            List<User> users = userRepository.GetAll();
 
             return users
                 .Select(s => new UserModel(s))
@@ -32,21 +33,25 @@ namespace MyBooking.Controllers
         [HttpGet("{userId}")]
         public ActionResult<UserModel> GetById(int userId)
         {
-            User user = _userRepository.GetById(userId);
+            User user = userRepository.GetById(userId);
             return new UserModel(user);
         }
 
         /// POST Api/User
         [HttpPost]
-        public ActionResult<UserModel> Create([FromBody] UserModel Model)
+        public ActionResult<UserModel> Create([FromBody] UserModel userModel)
         {
-            User createdUser = _userRepository.Insert(new User
+            User createdUser = userRepository.Insert(new User
             {
-                Email = Model.Email,
-                Password = Model.Password,
-                FirstName = Model.FirstName,
-                LastName = Model.LastName,
-                RoleId = Model.RoleId
+                Email = userModel.Email,
+                Password = userModel.Password,
+                FirstName = userModel.FirstName,
+                LastName = userModel.LastName,
+                RoleId = userModel.RoleId,
+            }, new Cred
+            {
+                UserEmail = userModel.Email,
+                UserPassword = userModel.Password,
             });
 
             return new UserModel(createdUser);
@@ -56,7 +61,7 @@ namespace MyBooking.Controllers
         [HttpPut("{userId}")]
         public ActionResult<UserModel> Update(int userId, [FromBody] UserModel updatedUserModel)
         {
-            User updatedUser = _userRepository.Update(userId, new User
+            User updatedUser = userRepository.Update(userId, new User
             {
                 Email = updatedUserModel.Email,
                 Password = updatedUserModel.Password,
@@ -72,7 +77,7 @@ namespace MyBooking.Controllers
         [HttpDelete("{userId}")]
         public ActionResult<bool> Delete(int userId)
         {
-            return _userRepository.RemoveById(userId);
+            return userRepository.RemoveById(userId);
         }
     }
 }

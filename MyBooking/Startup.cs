@@ -42,6 +42,7 @@ namespace MyBooking
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAdvertRepository, AdvertRepository>();
+            services.AddTransient<ICredRepository, CredRepository>();
 
             services.AddEntityFrameworkSqlite().AddEntityFrameworkSqlite().AddDbContext<MyDbContext>();
             //.AddSqlite()

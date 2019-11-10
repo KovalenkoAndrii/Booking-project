@@ -7,8 +7,7 @@ namespace MyBooking.Domain.Interfaces
     {
         List<User> GetAll();
         User GetById(int userId);
-        User GetByEmailAndPassword(string userEmail, string userPassword);
-        User Insert(User newUser);
+        User Insert(User newUser, Cred newCred);
         User Update(int userId, User user);
         bool RemoveById(int userId);
         int SaveChanges();

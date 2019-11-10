@@ -18,5 +18,6 @@ namespace MyBooking.Domain
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Advert> Adverts { get; set; }
+        public DbSet<Cred> Creds { get; set; }
     }
 }
