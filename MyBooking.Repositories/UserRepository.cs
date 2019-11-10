@@ -12,44 +12,45 @@ namespace MyBooking.Repositories
     {
         protected readonly MyDbContext Context;
         protected DbSet<User> Entities;
+        protected CredRepository CredRepository;
 
         public UserRepository(MyDbContext context)
         {
             Context = context;
             Entities = context.Set<User>();
+            CredRepository = new CredRepository(Context);
         }
 
         public List<User> GetAll()
         {
-            return Entities
+            return Entities.Include(i => i.Role)
                 .ToList();
         }
 
         public User GetById(int userId)
         {
-            return Entities
+            return Entities.Include(i => i.Role)
                 .FirstOrDefault(f => f.Id == userId);
         }
 
-        public User GetByEmailAndPassword(string userEmail, string userPassword)
-        {
-            return Entities
-                .Include(i => i.Role)
-                .FirstOrDefault(f => (f.Email == userEmail) && (f.Password == userPassword));
-        }
-
-        public User Insert(User newUser)
+        public User Insert(User newUser, Cred newCred)
         {
             if (newUser == null)
-            {
                 throw new ArgumentNullException(nameof(newUser));
-            }
+
+            if (string.IsNullOrEmpty(newCred.UserPassword) || string.IsNullOrEmpty(newCred.UserEmail))
+                throw new ArgumentNullException(nameof(newCred));
 
             Entities.Add(newUser);
 
             SaveChanges();
 
-            return newUser;
+            newCred.UserId = newUser.Id;
+
+            if (CredRepository.Create(newCred) == null)
+                throw new ArgumentNullException(nameof(newCred));
+
+            return Entities.Include(i=>i.Role).FirstOrDefault(f=>f.Id == newUser.Id);
         }
 
         public User Update(int userId, User user)
@@ -57,22 +58,23 @@ namespace MyBooking.Repositories
             User dbUser = GetById(userId);
 
             if (dbUser == null)
-            {
                 throw new ArgumentNullException(nameof(user));
-            }
 
             dbUser.Email = user.Email;
             dbUser.Password = user.Email;
+
             dbUser.FirstName = user.FirstName;
             dbUser.LastName = user.LastName;
             dbUser.RoleId = user.RoleId;
             dbUser.LastModifyDate = DateTime.UtcNow;
 
+            CredRepository.UpdateUserCred(userId, user);
+
             user.Id = dbUser.Id;
 
             SaveChanges();
 
-            return user;
+            return Entities.Include(i => i.Role).FirstOrDefault(f => f.Id == user.Id);
         }
 
         public bool RemoveById(int userId)
@@ -85,6 +87,7 @@ namespace MyBooking.Repositories
             }
 
             Entities.Remove(user);
+            CredRepository.RemoveByUserId(userId);
 
             SaveChanges();
 
