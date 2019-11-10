@@ -26,7 +26,7 @@ namespace MyBooking.Controllers
             User user = credRepository.GetByEmailAndPassword(credModel.UserEmail, credModel.UserPassword);
 
             if (user == null)
-                return BadRequest();
+                return Unauthorized();
 
             return new UserModel(user);
         }
