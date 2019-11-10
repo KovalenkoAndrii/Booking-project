@@ -11,7 +11,6 @@ namespace MyBooking.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository userRepository;
-        private readonly ICredRepository credRepository;
 
         public UserController(IUserRepository userRepository)
         {

@@ -38,15 +38,14 @@ namespace MyBooking
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-           
+
             services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAdvertRepository, AdvertRepository>();
             services.AddTransient<ICredRepository, CredRepository>();
+            services.AddTransient<IBookedRepository, BookedRepository>();
 
             services.AddEntityFrameworkSqlite().AddEntityFrameworkSqlite().AddDbContext<MyDbContext>();
-            //.AddSqlite()
-            //.AddDbContext<MyDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

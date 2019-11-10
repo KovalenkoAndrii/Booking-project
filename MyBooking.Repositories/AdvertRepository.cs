@@ -12,16 +12,18 @@ namespace MyBooking.Repositories
     {
         protected readonly MyDbContext Context;
         protected DbSet<Advert> Entities;
+        protected BookedRepository BookedRepository;
 
         public AdvertRepository(MyDbContext context)
         {
             Context = context;
             Entities = context.Set<Advert>();
+            BookedRepository = new BookedRepository(Context);
         }
 
         public List<Advert> GetAll()
         {
-            return Entities.
+            return Entities.Include(i => i.User).
                 ToList();
         }
 
@@ -33,14 +35,18 @@ namespace MyBooking.Repositories
 
         public Advert GetById(int advertId)
         {
-            return Entities
+            return Entities.Include(i => i.User)
                 .FirstOrDefault(f => f.Id == advertId);
         }
 
         public List<Advert> GetWithFilters(bool animals = false, int countPeople = 0, int minCost = 0, int maxCost = 0)
         {
-            return Entities.
-                ToList();
+            return Entities.Where(w => (w.Animals == animals)
+                            && (w.CountPeople >= countPeople)
+                            && (w.Price > minCost)
+                            && (w.Price < maxCost))
+                            .Include(i=>i.User)
+                            .ToList();
         }
 
         public Advert Insert(Advert newAdvert)
@@ -54,7 +60,25 @@ namespace MyBooking.Repositories
 
             SaveChanges();
 
-            return newAdvert;
+            return Entities.Include(i=>i.User)
+                           .FirstOrDefault(f=>f.Id == newAdvert.Id);
+        }
+
+        public bool RemoveById(int advertId)
+        {
+            Advert advert = GetById(advertId);
+
+            if (advert == null)
+                throw new Exception("Advert was not found.");
+
+            if(BookedRepository.GetByAdvertId(advertId)!=null)
+                throw new Exception("Booked advert cannot be deleted.");
+
+            Entities.Remove(advert);
+
+            SaveChanges();
+
+            return true;
         }
 
         public int SaveChanges()

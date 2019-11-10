@@ -13,12 +13,14 @@ namespace MyBooking.Repositories
         protected readonly MyDbContext Context;
         protected DbSet<User> Entities;
         protected CredRepository CredRepository;
+        protected BookedRepository BookedRepository;
 
         public UserRepository(MyDbContext context)
         {
             Context = context;
             Entities = context.Set<User>();
             CredRepository = new CredRepository(Context);
+            BookedRepository = new BookedRepository(Context);
         }
 
         public List<User> GetAll()
@@ -82,9 +84,10 @@ namespace MyBooking.Repositories
             User user = GetById(userId);
 
             if (user == null)
-            {
                 throw new Exception("User was not found.");
-            }
+
+            if (BookedRepository.GetByUserId(userId) != null)
+                throw new Exception("Landlord of the booked advert cannot be removed.");
 
             Entities.Remove(user);
             CredRepository.RemoveByUserId(userId);
