@@ -85,7 +85,7 @@ namespace MyBooking.Repositories
             Booked booked = GetById(bookedId);
 
             if (booked == null)
-                throw new Exception("Booked was not found.");
+                throw new ArgumentNullException(nameof(booked));
 
             Entities.Remove(booked);
 
