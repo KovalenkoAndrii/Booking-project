@@ -28,25 +28,25 @@ namespace MyBooking.Controllers
                 .ToList();
         }
 
-        /// GET Api/Advert/{advertId}
-        [HttpGet("{advertId}")]
+        /// GET Api/Advert/ById/{advertId}
+        [HttpGet("ById/{advertId}")]
         public ActionResult<AdvertModel> GetById(int advertId)
         {
             Advert advert = advertRepository.GetById(advertId);
             return new AdvertModel(advert);
         }
 
-        /// GET Api/Advert/{advertAddress}
-        [HttpGet("{advertAddress}")]
+        /// GET Api/Advert/ByAddress/{advertAddress}
+        [HttpGet("ByAddress/{advertAddress}")]
         public ActionResult<AdvertModel> GetByAddress(string advertAddress)
         {
             Advert advert = advertRepository.GetByAddress(advertAddress);
             return new AdvertModel(advert);
         }
 
-        /// GET Api/Advert/{animals,countPeople,minPrice,maxPrice}
-        [HttpGet("{animals,countPeople,minPrice,maxPrice}")]
-        public ActionResult<IEnumerable<AdvertModel>> GetByFilters1([FromBody] FiltersModel filtersModel)
+        /// GET Api/Advert/ByFilters/{animals,countPeople,minPrice,maxPrice}
+        [HttpGet("ByFilters{filtersModel}")]
+        public ActionResult<IEnumerable<AdvertModel>> GetByFilters([FromBody] FiltersModel filtersModel)
         {
             List<Advert> adverts = advertRepository.GetWithFilters(filtersModel.Animal, filtersModel.CountPeople, filtersModel.MinCost, filtersModel.MaxCost);
 
