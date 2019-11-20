@@ -44,8 +44,8 @@ namespace MyBooking.Controllers
             return new AdvertModel(advert);
         }
 
-        /// GET Api/Advert/ByFilters/{animals,countPeople,minPrice,maxPrice}
-        [HttpGet("ByFilters{filtersModel}")]
+        /// GET Api/Advert/ByFilters
+        [HttpGet("ByFilters")]
         public ActionResult<IEnumerable<AdvertModel>> GetByFilters([FromBody] FiltersModel filtersModel)
         {
             List<Advert> adverts = advertRepository.GetWithFilters(filtersModel.Animal, filtersModel.CountPeople, filtersModel.MinCost, filtersModel.MaxCost);
