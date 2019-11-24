@@ -25,7 +25,7 @@ class App extends React.Component {
 
     componentDidMount() {
         // fetch method to retrieve user data fro server and set to role
-        this.state.searchResult = this.getAdverts();
+        this.setState({searchResult: this.getAdverts()});
     }
 
     handleRegisterUser = params => {
