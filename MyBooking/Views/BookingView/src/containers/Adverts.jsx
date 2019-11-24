@@ -1,9 +1,23 @@
 import React, { Fragment } from 'react';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col, Form, Button } from 'react-bootstrap';
 import Advert from '../components/Adverts/Advert';
 
-const Adverts = (props) => {
-    const { adverts, searchByAddress, selectedAddress } = props;
+class Adverts extends React.Component {
+    checkAddAdvertButton = userRole => {
+        const { onAddAdvertButtonClick } = this.props;
+        if (userRole === 'landlord') {
+            return (
+                <Row>
+                    <Col>
+                        <Button className="float-right" variant="outline-dark" onClick={onAddAdvertButtonClick}>+ Add advert</Button>
+                    </Col>
+                </Row>
+            )
+        }
+    }
+    
+    render() {
+        const { adverts, searchByAddress, selectedAddress, user } = this.props;
     return (
         <Fragment>
             <Row>
@@ -27,8 +41,12 @@ const Adverts = (props) => {
                     ))
                 }
             </Row>
+            {
+                this.checkAddAdvertButton(user.role)
+            }
         </Fragment>
     )
+    }
 };
 
 export default Adverts;
