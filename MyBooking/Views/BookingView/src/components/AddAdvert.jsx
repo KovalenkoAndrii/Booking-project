@@ -99,7 +99,7 @@ class AddAdvert extends Component {
                         <Col xs={3} sm={4}>
                             <Form.Label>Count people:</Form.Label>
                         </Col>
-                        <Col lg={3}>
+                        <Col lg={3} sm={3} xs={3}>
                             <Form.Control
                                 as="select"
                                 onChange={this.handleCountPeople}
