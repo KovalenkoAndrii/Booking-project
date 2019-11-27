@@ -7,6 +7,7 @@ import Adverts from './containers/Adverts';
 import Header from './containers/HeaderContainer';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
+import AddAdvert from './components/AddAdvert';
 
 class App extends React.Component {
     state = {
@@ -20,7 +21,9 @@ class App extends React.Component {
         },
         isSignUpModalOpen: false,
         isSignInModalOpen: false,
-        logInErrorMessage: null
+        logInErrorMessage: null,
+        addAdvretErrorMessage: null,
+        isAddAdvertModalOpen: false
     };
 
     componentDidMount() {
@@ -36,7 +39,7 @@ class App extends React.Component {
 
         //On success
         const user = {
-            role: 'tenant',
+            role: 'landlord',
             name: 'test',
             email: 'test@test.com'
         };
@@ -57,6 +60,15 @@ class App extends React.Component {
         //On error
         // this.setState( { logInErrorMessage: 'No such user or password is incorrect' } )
     };
+
+    handleAddAdvert = params => {
+        //TODO: Add axios call
+
+        //On success
+        // this.setState({isAddAdvertModalOpen: false});
+        //On error
+        // this.setState( { addAdvretErrorMessage: 'Please fill all fields' } )
+    }
 
     getAdverts = () => {
         // get all advers from db
@@ -237,16 +249,22 @@ class App extends React.Component {
     handleSignUpSubmit = params => {
         this.setState({ isSignUpModalOpen: false });
         this.handleRegisterUser(params);
-        console.log('Successfully registered !');
     };
 
     handleSignInSubmit = params => {
         this.handleLogInUser(params);
-        console.log('Successfully Logged In !');
     };
+
+    handleAddAdvertSubmit = params => {
+        this.handleAddAdvert(params)
+    }
 
     handleSignUpButtonClick = () => {
         this.setState({ isSignUpModalOpen: true })
+    };
+
+    handleAddAdvertButtonClick = () => {
+        this.setState({ isAddAdvertModalOpen: true })
     };
 
     handleSignInButtonClick = () => {
@@ -266,9 +284,17 @@ class App extends React.Component {
         this.setState( {isSignInModalOpen: false})
     };
 
+    handleOnAddAdvertHide = () => {
+        this.setState( {isAddAdvertModalOpen: false})
+    };
+
     onInformationChange = () => {
         this.setState({logInErrorMessage: null})
     };
+
+    onAddAdvertInfoChange = () => {
+        this.setState({addAdvretMessage: null})
+    }
 
     render() {
         return (
@@ -302,6 +328,8 @@ class App extends React.Component {
                                             adverts={this.state.searchResult}
                                             searchByAddress={this.handleAddressesSearch}
                                             selectedAddress={this.state.selectedAddress}
+                                            user={this.state.user}
+                                            onAddAdvertButtonClick={this.handleAddAdvertButtonClick}
                                         />
                                     )
                                 }
@@ -330,6 +358,19 @@ class App extends React.Component {
                             onSubmit={this.handleSignInSubmit}
                             errorMessage={this.state.logInErrorMessage}
                             onInformationChange={this.onInformationChange}
+                        />
+                    </Modal.Body>
+                </Modal>
+                <Modal show={this.state.isAddAdvertModalOpen} onHide={this.handleOnAddAdvertHide}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add advert</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <AddAdvert
+                            onSubmit={this.handleAddAdvertSubmit}
+                            errorMessage={this.state.addAdvretErrorMessage}
+                            onAddAdvertInfoChange={this.onAddAdvertInfoChange}
                         />
                     </Modal.Body>
                 </Modal>
