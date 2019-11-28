@@ -22,7 +22,7 @@ class App extends React.Component {
         isSignUpModalOpen: false,
         isSignInModalOpen: false,
         logInErrorMessage: null,
-        addAdvretErrorMessage: null,
+        addAdvertErrorMessage: null,
         isAddAdvertModalOpen: false
     };
 
@@ -71,7 +71,7 @@ class App extends React.Component {
     }
 
     getAdverts = () => {
-        // get all advers from db
+        // get all adverts from db
         return [
             {
                 name: 'Town house',
@@ -293,7 +293,7 @@ class App extends React.Component {
     };
 
     onAddAdvertInfoChange = () => {
-        this.setState({addAdvretMessage: null})
+        this.setState({addAdvertErrorMessage: null})
     }
 
     render() {
@@ -369,7 +369,7 @@ class App extends React.Component {
                     <Modal.Body>
                         <AddAdvert
                             onSubmit={this.handleAddAdvertSubmit}
-                            errorMessage={this.state.addAdvretErrorMessage}
+                            errorMessage={this.state.addAdvertErrorMessage}
                             onAddAdvertInfoChange={this.onAddAdvertInfoChange}
                         />
                     </Modal.Body>
