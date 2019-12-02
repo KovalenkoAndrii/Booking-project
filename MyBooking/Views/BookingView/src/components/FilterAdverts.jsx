@@ -71,7 +71,7 @@ class FilerAdverts extends React.Component {
                         </Col>
                     </Row>
                 </Form.Group>
-                <Form.Group controlId="formCountRooms">
+                <Form.Group controlId="formCountPeople">
                     <Row>
                         <Col xs={3} sm={4}>
                             <Form.Label>Count people:</Form.Label>

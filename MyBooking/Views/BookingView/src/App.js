@@ -1,37 +1,77 @@
 import React from 'react';
-import {Container, Row, Col} from 'react-bootstrap';
+import { Container, Row, Col, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import FilerAdverts from './components/FilterAdverts';
 import Adverts from './containers/Adverts';
 import Header from './containers/HeaderContainer';
+import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
+import AddAdvert from './components/AddAdvert';
 
 class App extends React.Component {
     state = {
         searchResult: [],
         adverts: [],
         selectedAddress: '',
-        user: null
+        user: {
+            role: null,
+            name: null,
+            email: null
+        },
+        isSignUpModalOpen: false,
+        isSignInModalOpen: false,
+        logInErrorMessage: null,
+        addAdvertErrorMessage: null,
+        isAddAdvertModalOpen: false
     };
 
     componentDidMount() {
         // fetch method to retrieve user data fro server and set to role
-        const user = this.fetchUserData();
-        this.setState({ user });
-        this.state.searchResult = this.getAdverts();
+        this.setState({
+            searchResult: this.getAdverts(),
+            adverts: this.getAdverts()
+        });
     }
 
-    fetchUserData = () => {
-        // get user data from request
-        return {
-            role: 'unauthorized',
+    handleRegisterUser = params => {
+        //TODO: Add axios fetcher to save user data
+
+        //On success
+        const user = {
+            role: 'landlord',
             name: 'test',
             email: 'test@test.com'
-        }
+        };
+        this.setState({ user });
+        //On error
     };
 
+    handleLogInUser = params => {
+        //TODO: Add axios fetcher to save user data
+
+        //On success
+        const user = {
+            role: 'tenant',
+            name: 'test',
+            email: 'test@test.com'
+        };
+        this.setState({ user, isSignInModalOpen: false });
+        //On error
+        // this.setState( { logInErrorMessage: 'No such user or password is incorrect' } )
+    };
+
+    handleAddAdvert = params => {
+        //TODO: Add axios call
+
+        //On success
+        // this.setState({isAddAdvertModalOpen: false});
+        //On error
+        // this.setState( { addAdvretErrorMessage: 'Please fill all fields' } )
+    }
+
     getAdverts = () => {
-        // get all advers from db
+        // get all adverts from db
         return [
             {
                 name: 'Town house',
@@ -109,7 +149,7 @@ class App extends React.Component {
                 ]
             }
         ];
-    }
+    };
 
     fetchAdverts = params => {
         return [
@@ -206,6 +246,56 @@ class App extends React.Component {
         })
     };
 
+    handleSignUpSubmit = params => {
+        this.setState({ isSignUpModalOpen: false });
+        this.handleRegisterUser(params);
+    };
+
+    handleSignInSubmit = params => {
+        this.handleLogInUser(params);
+    };
+
+    handleAddAdvertSubmit = params => {
+        this.handleAddAdvert(params)
+    }
+
+    handleSignUpButtonClick = () => {
+        this.setState({ isSignUpModalOpen: true })
+    };
+
+    handleAddAdvertButtonClick = () => {
+        this.setState({ isAddAdvertModalOpen: true })
+    };
+
+    handleSignInButtonClick = () => {
+        this.setState({ isSignInModalOpen: true })
+    };
+
+    handleLogOutButton = () => {
+        //TODO: Do we need to send request to API ?
+        this.setState({ user: {} })
+    };
+
+    handleOnSignUpHide = () => {
+        this.setState( {isSignUpModalOpen: false})
+    };
+
+    handleOnSignInHide = () => {
+        this.setState( {isSignInModalOpen: false})
+    };
+
+    handleOnAddAdvertHide = () => {
+        this.setState( {isAddAdvertModalOpen: false})
+    };
+
+    onInformationChange = () => {
+        this.setState({logInErrorMessage: null})
+    };
+
+    onAddAdvertInfoChange = () => {
+        this.setState({addAdvertErrorMessage: null})
+    }
+
     render() {
         return (
             <div className="App">
@@ -215,6 +305,9 @@ class App extends React.Component {
                             <Col xs={12}>
                                 <Header
                                     user={this.state.user}
+                                    onLogOutClick={this.handleLogOutButton}
+                                    onSignUpButtonClick={this.handleSignUpButtonClick}
+                                    onSignInButtonClick={this.handleSignInButtonClick}
                                 />
                             </Col>
                         </Row>
@@ -235,6 +328,8 @@ class App extends React.Component {
                                             adverts={this.state.searchResult}
                                             searchByAddress={this.handleAddressesSearch}
                                             selectedAddress={this.state.selectedAddress}
+                                            user={this.state.user}
+                                            onAddAdvertButtonClick={this.handleAddAdvertButtonClick}
                                         />
                                     )
                                 }
@@ -242,6 +337,43 @@ class App extends React.Component {
                         </Row>
                     </Container>
                 </section>
+                <Modal show={this.state.isSignUpModalOpen} onHide={this.handleOnSignUpHide}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>User registration</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <SignUp
+                            onSubmit={this.handleSignUpSubmit}
+                        />
+                    </Modal.Body>
+                </Modal>
+                <Modal show={this.state.isSignInModalOpen} onHide={this.handleOnSignInHide}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>User authentication</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <SignIn
+                            onSubmit={this.handleSignInSubmit}
+                            errorMessage={this.state.logInErrorMessage}
+                            onInformationChange={this.onInformationChange}
+                        />
+                    </Modal.Body>
+                </Modal>
+                <Modal show={this.state.isAddAdvertModalOpen} onHide={this.handleOnAddAdvertHide}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add advert</Modal.Title>
+                    </Modal.Header>
+
+                    <Modal.Body>
+                        <AddAdvert
+                            onSubmit={this.handleAddAdvertSubmit}
+                            errorMessage={this.state.addAdvertErrorMessage}
+                            onAddAdvertInfoChange={this.onAddAdvertInfoChange}
+                        />
+                    </Modal.Body>
+                </Modal>
             </div>
         );
     }
