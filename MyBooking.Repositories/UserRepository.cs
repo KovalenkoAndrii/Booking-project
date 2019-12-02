@@ -63,7 +63,7 @@ namespace MyBooking.Repositories
                 throw new ArgumentNullException(nameof(user));
 
             dbUser.Email = user.Email;
-            dbUser.Password = user.Email;
+            dbUser.Password = user.Password;
 
             dbUser.FirstName = user.FirstName;
             dbUser.LastName = user.LastName;
