@@ -46,6 +46,8 @@ namespace MyBooking
             services.AddTransient<IBookedRepository, BookedRepository>();
 
             services.AddEntityFrameworkSqlite().AddEntityFrameworkSqlite().AddDbContext<MyDbContext>();
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +64,8 @@ namespace MyBooking
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseCors(builder => builder.AllowAnyOrigin());
 
             app.UseMvc(routes =>
             {
