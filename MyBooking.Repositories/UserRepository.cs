@@ -64,6 +64,7 @@ namespace MyBooking.Repositories
 
             dbUser.Email = user.Email;
             dbUser.Password = user.Email;
+            dbUser.PhoneNumber = user.PhoneNumber;
 
             dbUser.FirstName = user.FirstName;
             dbUser.LastName = user.LastName;

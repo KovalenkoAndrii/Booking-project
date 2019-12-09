@@ -35,6 +35,9 @@ namespace MyBooking.Controllers
         public ActionResult<BookedModel> GetById(int bookedId)
         {
             Booked booked = bookedRepository.GetById(bookedId);
+            if (booked == null)
+                return new NotFoundResult();
+
             return new BookedModel(booked);
         }
 

@@ -8,6 +8,7 @@ namespace MyBooking.Models
 
         public string Email { get; set; }
         public string Password { get; set; }
+        public string PhoneNumber { get; set; }
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -28,6 +29,7 @@ namespace MyBooking.Models
 
             Password = userEntity.Password;
             Email = userEntity.Email;
+            PhoneNumber = userEntity.PhoneNumber;
 
             RoleId = userEntity.RoleId;
 

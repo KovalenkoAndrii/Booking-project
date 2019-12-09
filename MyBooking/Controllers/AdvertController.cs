@@ -64,6 +64,7 @@ namespace MyBooking.Controllers
                 Info = Model.Info,
                 CountPeople = Model.CountPeople,
                 Address = Model.Address,
+                PhotoPath = Model.PhotoPath,
                 Animals = Model.Animals,
                 Price = Model.Price,
                 UserId = Model.UserId

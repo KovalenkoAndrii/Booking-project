@@ -15,6 +15,8 @@ namespace MyBooking.Domain.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public string PhoneNumber { get; set; }
+
         [ForeignKey("Role")]
         public int RoleId { get; set; }
         public Role Role { get; set; }

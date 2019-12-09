@@ -44,6 +44,7 @@ namespace MyBooking.Controllers
             {
                 Email = userModel.Email,
                 Password = userModel.Password,
+                PhoneNumber = userModel.PhoneNumber,
                 FirstName = userModel.FirstName,
                 LastName = userModel.LastName,
                 RoleId = userModel.RoleId,
@@ -64,6 +65,7 @@ namespace MyBooking.Controllers
             {
                 Email = updatedUserModel.Email,
                 Password = updatedUserModel.Password,
+                PhoneNumber = updatedUserModel.PhoneNumber,
                 FirstName = updatedUserModel.FirstName,
                 LastName = updatedUserModel.LastName,
                 RoleId = updatedUserModel.RoleId

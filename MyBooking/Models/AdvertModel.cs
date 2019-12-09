@@ -11,6 +11,7 @@ namespace MyBooking.Models
 
         public string Info { get; set; }
         public string Address { get; set; }
+        public string PhotoPath { get; set; }
 
         public int CountPeople { get; set; }
         public bool Animals { get; set; }
@@ -29,6 +30,7 @@ namespace MyBooking.Models
 
             Info = advertEntity.Info;
             Address = advertEntity.Address;
+            PhotoPath = advertEntity.PhotoPath;
 
             CountPeople = advertEntity.CountPeople;
             Animals = advertEntity.Animals;

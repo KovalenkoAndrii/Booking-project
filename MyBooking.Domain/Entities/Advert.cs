@@ -11,6 +11,7 @@ namespace MyBooking.Domain.Entities
 
         public string Info { get; set; }
         public string Address { get; set; }
+        public string PhotoPath { get; set; }
 
         public int CountPeople { get; set; }
         public bool Animals { get; set; }
