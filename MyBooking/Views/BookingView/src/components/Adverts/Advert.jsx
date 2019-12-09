@@ -5,7 +5,7 @@ const Advert = props => {
     const { advert } = props;
     return (
         <div className="advert">
-            <img src={advert.photo} alt="Advert photo"/>
+            <img src={advert.photo} alt="Advert"/>
             <p>{advert.name}</p>
             <p>{advert.address}</p>
         </div>

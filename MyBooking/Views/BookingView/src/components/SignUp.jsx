@@ -4,7 +4,9 @@ import { Form, Button, Alert } from 'react-bootstrap';
 class SignUp extends Component {
     state = {
         email: '',
-        name: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
         password: '',
         repeatPassword: '',
         isLandLord: false,
@@ -14,6 +16,16 @@ class SignUp extends Component {
     handleName = e => {
         const name = e.target.value;
         this.setState({ name });
+    };
+
+    handleSurame = e => {
+        const surname = e.target.value;
+        this.setState({ surname });
+    };
+
+    handlePhoneNumber = e => {
+        const phoneNumber = e.target.value;
+        this.setState({ phoneNumber });
     };
 
     handleEmail = e => {
@@ -68,7 +80,25 @@ class SignUp extends Component {
                         type="text"
                         placeholder="Enter name"
                         onChange={this.handleName}
-                        value={this.state.name}
+                        value={this.state.firstName}
+                    />
+                </Form.Group>
+                <Form.Group controlId="formSurname">
+                    <Form.Label>Surname</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter surname"
+                        onChange={this.handleSurame}
+                        value={this.state.lastName}
+                    />
+                </Form.Group>
+                <Form.Group controlId="formPhoneNumber">
+                    <Form.Label>Phone number</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter phone number"
+                        onChange={this.handlePhoneNumber}
+                        value={this.state.phoneNumber}
                     />
                 </Form.Group>
 

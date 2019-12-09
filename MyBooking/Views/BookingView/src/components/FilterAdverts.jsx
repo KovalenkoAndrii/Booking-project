@@ -3,32 +3,32 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 
 class FilerAdverts extends React.Component {
     state = {
-        priceFrom: '',
-        priceTo: '',
-        peopleCount: 1,
-        possibleAnimals: false,
+        minCost: '',
+        maxCost: '',
+        countPeople: 1,
+        animal: false,
         dateFrom: '',
         dateTo: ''
     };
 
-    handlePriceFrom = e => {
-        const priceFrom = e.target.value;
-        this.setState({ priceFrom })
+    handleMinCost = e => {
+        const minCost = e.target.value;
+        this.setState({ minCost })
     };
 
-    handlePriceTo = e => {
-        const priceTo = e.target.value;
-        this.setState({ priceTo })
+    handleMaxCost = e => {
+        const maxCost = e.target.value;
+        this.setState({ maxCost })
     };
 
     handlePeopleCount = e => {
-        const peopleCount = e.target.value;
-        this.setState({ peopleCount })
+        const countPeople = e.target.value;
+        this.setState({ countPeople })
     };
 
     handlePossibleAnimals = e => {
-        const possibleAnimals = e.target.value;
-        this.setState({ possibleAnimals })
+        const animal = e.target.value;
+        this.setState({ animal })
     };
 
     handleDateFrom = e => {
@@ -57,16 +57,16 @@ class FilerAdverts extends React.Component {
                             <Form.Control
                                 type="text"
                                 placeholder="0"
-                                onChange={this.handlePriceFrom}
-                                value={this.state.priceFrom}
+                                onChange={this.handleMinCost}
+                                value={this.state.minCost}
                             />
                         </Col>
                         <Col xs={12} sm={6}>
                             <Form.Control
                                 type="text"
                                 placeholder="100000"
-                                onChange={this.handlePriceTo}
-                                value={this.state.priceTo}
+                                onChange={this.handleMaxCost}
+                                value={this.state.maxCost}
                             />
                         </Col>
                     </Row>
@@ -80,7 +80,7 @@ class FilerAdverts extends React.Component {
                             <Form.Control
                                 as="select"
                                 onChange={this.handlePeopleCount}
-                                value={this.state.peopleCount}
+                                value={this.state.countPeople}
                             >
                                 <option>1</option>
                                 <option>2</option>
@@ -99,7 +99,7 @@ class FilerAdverts extends React.Component {
                             <Form.Check
                                 label="Yes"
                                 type="radio"
-                                name="WithAnimals"
+                                name="animal"
                                 value={true}
                                 onChange={this.handlePossibleAnimals}
                             />
@@ -108,7 +108,7 @@ class FilerAdverts extends React.Component {
                                 label="No"
                                 type="radio"
                                 value={false}
-                                name="WithAnimals"
+                                name="animal"
                                 onChange={this.handlePossibleAnimals}
                             />
                         </Col>

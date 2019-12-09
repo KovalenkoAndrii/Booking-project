@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
-import Advert from '../components/Adverts/Advert';
+import Advert from '../Adverts/Advert';
 
-class Adverts extends React.Component {
+class AdvertList extends React.Component {
     checkAddAdvertButton = userRole => {
         const { onAddAdvertButtonClick } = this.props;
-        if (userRole === 'landlord') {
+        if (userRole === 'landlord' || userRole === 'admin') {
             return (
                 <Row>
                     <Col>
@@ -14,7 +14,7 @@ class Adverts extends React.Component {
                 </Row>
             )
         }
-    }
+    };
     
     render() {
         const { adverts, searchByAddress, selectedAddress, user } = this.props;
@@ -47,6 +47,6 @@ class Adverts extends React.Component {
         </Fragment>
     )
     }
-};
+}
 
-export default Adverts;
+export default AdvertList;

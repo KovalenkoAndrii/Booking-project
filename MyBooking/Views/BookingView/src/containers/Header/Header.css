@@ -1,0 +1,11 @@
+.navbar a {
+    color: #FFF;
+}
+
+.navbar a:hover {
+    text-decoration-line: none;
+}
+
+.navbar {
+    margin-bottom: 5px;
+}
